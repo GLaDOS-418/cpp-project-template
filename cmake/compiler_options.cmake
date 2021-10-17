@@ -18,6 +18,12 @@ set(CLANG_WARNINGS
   -Wdouble-promotion # warn if float is implicit promoted to double
   -Wformat=2 # warn on security issues around functions that format output
   # (ie printf)
+
+  # sanitizers
+  -fsanitize=pointer-compare, 
+  -fsanitize=pointer-subtract, 
+  -fsanitize=undefined, 
+  -fsanitize=address, 
   )
 
 if (${PROJECT_NAME}_WARNINGS_AS_ERRORS)

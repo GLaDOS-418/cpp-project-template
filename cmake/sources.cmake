@@ -20,5 +20,9 @@ set(exe_sources
 
 # sources related to all testing
 set(test_sources
-  test/tmp_test.cpp
+  test/src/tmp_test.cpp
+  )
+
+set(test_include
+  test/include
   )

@@ -39,7 +39,7 @@ endif()
 # ENABLE PACKAGE MANAGER
 #
 
-include(cmake/conan.cmake)
+include(cmake/conan_config.cmake)
 
 
 #
@@ -47,17 +47,29 @@ include(cmake/conan.cmake)
 #
 include(cmake/sources.cmake)
 
-add_library( ${PROJECT_NAME}_LIB ${lib_sources})
-target_include_directories(${PROJECT_NAME}_LIB PUBLIC  ${lib_include} )
+add_library( ${PROJECT_NAME}-lib ${lib_sources})
+target_include_directories(${PROJECT_NAME}-lib PUBLIC  ${lib_include} )
 
 add_executable(${PROJECT_NAME} ${exe_sources})
 target_include_directories(${PROJECT_NAME} PUBLIC ${exe_include} )
 
-# LINK LIB WITH EXE
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_LIB)
+add_executable(${PROJECT_NAME}-test ${test_sources})
+target_include_directories(${PROJECT_NAME}-test PUBLIC ${test_include} )
+
+## add build dependencies
+add_dependencies(${PROJECT_NAME}-test ${PROJECT_NAME}-lib)
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+
+## link lib with exe and test
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME}-lib)
+
+## add conan libs to exe, lib and test
+target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
+target_link_libraries(${PROJECT_NAME}-lib ${CONAN_LIBS})
+target_link_libraries(${PROJECT_NAME}-test ${CONAN_LIBS})
 
 message(STATUS "Added all header and implementation files.\n")
-
 
 # COMPILER WARNINGS
 #
@@ -65,12 +77,6 @@ include(cmake/compiler_options.cmake)
 message(STATUS "Applied compiler warnings. Using standard ${CMAKE_CXX_STANDARD}.\n")
 
 
-#
-# Unit testing setup
-#
-
-if(${PROJECT_NAME}_ENABLE_UNIT_TESTING)
-  enable_testing()
-  message(STATUS "Build unit tests for the project. Tests should always be found in the test folder\n")
-  # add_subdirectory(test)
-endif()
+set_target_properties(${PROJECT_NAME}-lib ${PROJECT_NAME}-test ${PROJECT_NAME} PROPERTIES
+        CXX_STANDARD 17
+)
