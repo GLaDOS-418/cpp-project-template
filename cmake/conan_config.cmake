@@ -4,7 +4,6 @@
 #
 
 set(${PROJECT_NAME}_CONAN_REQUIRES "
-poco/1.11.0
 catch2/2.13.7
 ")
 set(${PROJECT_NAME}_CONAN_OPTIONS "")

@@ -2,7 +2,7 @@
 # or which are to be used by the UT framework
 # to be added as a library
 set(lib_include
-    src/include/lib
+    src/lib/include
   )
 
 set(lib_sources
@@ -11,16 +11,16 @@ set(lib_sources
 
 # sources which are required to start/ bootstrap this project as application
 set(exe_include
-  src/include
+  src/driver/include
   )
 
 set(exe_sources
-  src/source/main.cpp
+  src/driver/main.cpp
   )
 
 # sources related to all testing
 set(test_sources
-  test/src/tmp_test.cpp
+  test/tests.cpp
   )
 
 set(test_include

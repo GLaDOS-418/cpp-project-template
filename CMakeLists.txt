@@ -12,12 +12,12 @@ project(
   LANGUAGES CXX
   )
 
+set(CMAKE_CXX_STANDARD 17)
 #
 # SET PROJECT OPTIONS
 #
 
 include(cmake/build_options.cmake)
-include(cmake/static_analyzers.cmake)
 
 if( NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug")
@@ -69,6 +69,9 @@ target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
 target_link_libraries(${PROJECT_NAME}-lib ${CONAN_LIBS})
 target_link_libraries(${PROJECT_NAME}-test ${CONAN_LIBS})
 
+set_target_properties(${PROJECT_NAME}-lib ${PROJECT_NAME}-test ${PROJECT_NAME} PROPERTIES
+  CXX_STANDARD 17)
+
 message(STATUS "Added all header and implementation files.\n")
 
 # COMPILER WARNINGS
@@ -77,6 +80,4 @@ include(cmake/compiler_options.cmake)
 message(STATUS "Applied compiler warnings. Using standard ${CMAKE_CXX_STANDARD}.\n")
 
 
-set_target_properties(${PROJECT_NAME}-lib ${PROJECT_NAME}-test ${PROJECT_NAME} PROPERTIES
-        CXX_STANDARD 17
-)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

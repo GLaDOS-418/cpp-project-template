@@ -1,0 +1,19 @@
+[
+{
+  "directory": "/home/helix/code/cpp-project-template/build",
+  "command": "/usr/bin/clang++   -I/home/helix/.conan/data/catch2/2.13.7/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include -I../test/include -I../src/lib/include      -g    -std=gnu++17 -o CMakeFiles/project-test.dir/test/tests.cpp.o -c /home/helix/code/cpp-project-template/test/tests.cpp",
+  "file": "/home/helix/code/cpp-project-template/test/tests.cpp"
+},
+
+{
+  "directory": "/home/helix/code/cpp-project-template/build",
+  "command": "/usr/bin/clang++   -I/home/helix/.conan/data/catch2/2.13.7/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include -I../src/driver/include -I../src/lib/include      -g    -std=gnu++17 -o CMakeFiles/project.dir/src/driver/main.cpp.o -c /home/helix/code/cpp-project-template/src/driver/main.cpp",
+  "file": "/home/helix/code/cpp-project-template/src/driver/main.cpp"
+},
+
+{
+  "directory": "/home/helix/code/cpp-project-template/build",
+  "command": "/usr/bin/clang++   -I/home/helix/.conan/data/catch2/2.13.7/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include -I../src/lib/include      -g    -std=gnu++17 -o CMakeFiles/project-lib.dir/src/lib/tmp.cpp.o -c /home/helix/code/cpp-project-template/src/lib/tmp.cpp",
+  "file": "/home/helix/code/cpp-project-template/src/lib/tmp.cpp"
+}
+]

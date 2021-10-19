@@ -1,5 +1,5 @@
-#ifndef __tmp_test_hpp__
-#define __tmp_test_hpp__
+#ifndef __tests_hpp__
+#define __tests_hpp__
 
 //required if using default main supplied by Catch2  lib
 #define CATCH_CONFIG_MAIN
@@ -8,4 +8,4 @@
 
 
 
-#endif // __tmp_test_hpp__
+#endif // __tests_hpp__
