@@ -12,10 +12,10 @@ A basic project template for modern C++. Cherry-picked the relevant parts from :
 
 Use the latest version of everything.
 
-- [x] *Compiler* : clang++, g++
-- [x] *Build* : CMake
-- [x] *Package Management* : Conan
-- [x] *Unit Testing* : Catch2
+- [x] *Compiler*                                      : clang++, g++
+- [x] *Build*                                         : CMake
+- [x] *Package Management*                            : Conan
+- [x] *Unit Testing*                                  : Catch2
 - [ ] *Static Code Analysers*
 - [ ] *Code Formatter*
 - [ ] *Code Coverage*
@@ -26,20 +26,36 @@ Use the latest version of everything.
 - [ ] *Mocking Framework*
 - [ ] *Fuzz Testing*
 - [ ] *Ccache* integration
-- [ ] *header file analysers* : include-what-you-use
+- [ ] *header file analysers*                         : include-what-you-use
 
 
 ## Build Instructions
 
 - create application and test executables
+- use conan 2.0
+- generate a default conan profile. update profile in the `project_build.sh` if not default.
 
-```
-$ make clean && make build      ## creates bin in build dir
-$ cd build/bin                  ## executables <project> and <project>-test
-$ ./project                     ## run the application
-$ ./project-test                ## run application tests
+```bash
+$ make clean   ## remove build dir
+$ make build   ## build project inside build dir
+$ make rebuild ## equivalent to `clean + build`
+$ make test    ## run tests from test folder
+$ make testout ## run only failed tests and ouput on stdout
 ```
 
-- conan packages are built from within the cmake.
-- conan libraries are mentioned inside `cmake/conan_config.cmake`.
+- check `project_build.sh` for step by step build process
 - to clear conan cache, run : `$ conan remove -f '*'`
+- here's a sample conan profile which can be gerenated using the command
+
+``` bash
+$ conan profile detect ## creates a default conan profile
+$ cat ~/.conan2/profiles/default
+[settings]
+arch=x86_64
+build_type=Debug
+compiler=clang
+compiler.cppstd=gnu20
+compiler.libcxx=libstdc++11
+compiler.version=15
+os=Linux
+```

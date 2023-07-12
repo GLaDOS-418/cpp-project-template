@@ -1,23 +1,20 @@
-cmake_minimum_required(VERSION 3.10)
+set( CMAKE_VERSION 3.23)
 
-#
-# PROJECT DETAILS
-#
+cmake_minimum_required(VERSION ${CMAKE_VERSION})
 
-set( PROJECT_NAME "project" ) # set from env
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set( PROJECT_NAME "tcp-protocol" )
+set( PROJECT_VERSION 0.1 )
 
 project(
-  ${PROJECT_NAME}
-  VERSION 0.1.0
+  ${PROJECT_NAME}  
+  VERSION ${PROJECT_VERSION}
   LANGUAGES CXX
   )
 
-set(CMAKE_CXX_STANDARD 17)
-#
-# SET PROJECT OPTIONS
-#
+set(CMAKE_CXX_STANDARD 20)
 
-include(cmake/build_options.cmake)
 
 if( NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug")
@@ -26,58 +23,69 @@ endif()
 
 message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
 
-#
-# PREVENT BUILDING IN THE SOURCE DIR
-#
 
-if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
-  message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.\n")
+## conan basic setup
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+  message( STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan...")
+  file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake" "${CMAKE_BINARY_DIR}/conan.cmake")
+  message(STATUS "Cmake-Conan downloaded succesfully.")
 endif()
 
+include(${CMAKE_BINARY_DIR}/conan.cmake)
 
-#
-# ENABLE PACKAGE MANAGER
-#
-
-include(cmake/conan_config.cmake)
-
-
-#
-# HEADERS AND IMPL FILES
-#
-include(cmake/sources.cmake)
-
-add_library( ${PROJECT_NAME}-lib ${lib_sources})
-target_include_directories(${PROJECT_NAME}-lib PUBLIC  ${lib_include} )
-
-add_executable(${PROJECT_NAME} ${exe_sources})
-target_include_directories(${PROJECT_NAME} PUBLIC ${exe_include} )
-
-add_executable(${PROJECT_NAME}-test ${test_sources})
-target_include_directories(${PROJECT_NAME}-test PUBLIC ${test_include} )
-
-## add build dependencies
-add_dependencies(${PROJECT_NAME}-test ${PROJECT_NAME}-lib)
-add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}-lib)
-
-## link lib with exe and test
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
-target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME}-lib)
-
-## add conan libs to exe, lib and test
-target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
-target_link_libraries(${PROJECT_NAME}-lib ${CONAN_LIBS})
-target_link_libraries(${PROJECT_NAME}-test ${CONAN_LIBS})
-
-set_target_properties(${PROJECT_NAME}-lib ${PROJECT_NAME}-test ${PROJECT_NAME} PROPERTIES
-  CXX_STANDARD 17)
-
-message(STATUS "Added all header and implementation files.\n")
-
-# COMPILER WARNINGS
-#
-include(cmake/compiler_options.cmake)
-message(STATUS "Applied compiler warnings. Using standard ${CMAKE_CXX_STANDARD}.\n")
+conan_add_remote(NAME conancenter 
+  URL
+  https://center.conan.io
+  )
 
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# interface means a header only library
+add_library( ${PROJECT_NAME}-lib INTERFACE )
+
+# ADD INCLUDE FOLDERS
+target_include_directories( ${PROJECT_NAME}-lib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include )
+
+# ADD EXECUTABLE
+add_executable( ${PROJECT_NAME} 
+  src/main.cpp
+  )
+
+target_link_libraries( ${PROJECT_NAME} PRIVATE ${PROJECT_NAME}-lib )
+
+set(GCC_WARNINGS
+  -Wall
+  -Wextra 
+  -Wshadow
+  -Wnon-virtual-dtor
+  -Wold-style-cast
+  -Wcast-align
+  -Wunused
+  -Woverloaded-virtual
+  -Wpedantic
+  -Wconversion
+  -Wsign-conversion
+  -Wnull-dereference
+  -Wdouble-promotion
+  -Wformat=2
+
+  #-fsanitize=undefined,thread
+  -fsanitize=undefined,address
+
+  #compile with gdb debug info
+  #-ggdb3
+  -g3
+  )
+
+add_compile_options( ${CLANG_WARNINGS} )
+
+link_libraries("-fsanitize=address")
+#link_libraries("-fsanitize=thread")
+
+# catch2 set up
+# option(BUILD_TESTS "Enables building the Catch2 unit tests" ON)
+
+#if(BUILD_TESTS)
+   enable_testing()
+   add_subdirectory(test)
+ #endif()
+
