@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION ${CMAKE_VERSION})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set( PROJECT_NAME "tcp-protocol" )
+set( PROJECT_NAME "project-name" )
 set( PROJECT_VERSION 0.1 )
 
 project(
