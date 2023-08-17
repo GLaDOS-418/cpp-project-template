@@ -59,3 +59,33 @@ compiler.libcxx=libstdc++11
 compiler.version=15
 os=Linux
 ```
+
+
+### New Project
+
+you can add below function to your `~/.bashrc` to set up new projects.
+
+- `$ new_cpp_project foobar`
+- creates a new project, `foobar`, with all the contents of `basic` branch of this repo.
+- provide the name of the new project as argument.
+
+```bash
+function new_cpp_project {
+  if [ ! ${1} ]
+  then
+    echo "project name not supplied..."
+    return
+  fi
+
+  git clone --depth 1 --single-branch --branch basic git@github.com:GLaDOS-418/cpp-project-template.git ${1}
+  cd ${1}
+  /usr/bin/rm -rf .git
+  echo "# ${1}" >| README.md
+  grep -rl --color=never 'project-name' | xargs sed -i "s/project-name/${1}/g"
+  git init
+  git add -f .
+  git commit -m "created project ${1}."
+
+  echo " ========================   PROJECT ${1} SETUP COMPLETE.  ======================== "
+}
+```
