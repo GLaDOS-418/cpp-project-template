@@ -4,8 +4,8 @@
 
 A basic project template for modern C++. Cherry-picked the relevant parts from :
 
-- [filipdutescu/modern-cpp-template](https://github.com/filipdutescu/modern-cpp-template)
 - [cpp-best-practices/cpp_starter_project](https://github.com/cpp-best-practices/cpp_starter_project) - ARCHIVED
+- [filipdutescu/modern-cpp-template](https://github.com/filipdutescu/modern-cpp-template)
 - [cpp-best-practices/cmake_template](https://github.com/cpp-best-practices/cmake_template)
 
 ## Features : Requirements
@@ -14,7 +14,7 @@ Use the latest version of everything.
 
 - [x] *Compiler*                                      : clang++, g++
 - [x] *Build*                                         : CMake
-- [x] *Package Management*                            : Conan
+- [x] *Package Management*                            : Conan 2.0
 - [x] *Unit Testing*                                  : Catch2
 - [ ] *Static Code Analysers*
 - [ ] *Code Formatter*
@@ -36,11 +36,12 @@ Use the latest version of everything.
 - generate a default conan profile. update profile in the `project_build.sh` if not default.
 
 ```bash
-$ make clean   ## remove build dir
-$ make build   ## build project inside build dir
-$ make rebuild ## equivalent to `clean + build`
-$ make test    ## run tests from test folder
-$ make testout ## run only failed tests and ouput on stdout
+$ make clean     ## remove build dir
+$ make build     ## build project inside build dir
+$ make rebuild   ## equivalent to `clean + build`
+$ make test      ## run tests from test folder
+$ make testprint ## run only failed tests and ouput on stdout
+$ make deps      ## installs all conan dependencies
 ```
 
 - check `project_build.sh` for step by step build process
