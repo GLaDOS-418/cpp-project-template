@@ -1,4 +1,4 @@
-set( CMAKE_VERSION 3.23)
+set( CMAKE_VERSION 3.26)
 
 cmake_minimum_required(VERSION ${CMAKE_VERSION})
 
@@ -13,7 +13,7 @@ project(
   LANGUAGES CXX
   )
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 
 if( NOT CMAKE_BUILD_TYPE)
@@ -32,12 +32,6 @@ if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
 endif()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
-
-conan_add_remote(NAME conancenter 
-  URL
-  https://center.conan.io
-  )
-
 
 # interface means a header only library
 add_library( ${PROJECT_NAME}-lib INTERFACE )
@@ -76,7 +70,7 @@ set(GCC_WARNINGS
   -g3
   )
 
-add_compile_options( ${CLANG_WARNINGS} )
+add_compile_options( ${GCC_WARNINGS} )
 
 link_libraries("-fsanitize=address")
 #link_libraries("-fsanitize=thread")

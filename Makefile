@@ -13,4 +13,4 @@ testprint:
 deps:
 	export CC=gcc && \
 	export CXX=g++ && \
-	conan install . --output-folder=./build --build=missing --profile gpp
+	conan install . --output-folder=./build --build=missing --profile default
