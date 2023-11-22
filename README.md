@@ -1,7 +1,5 @@
 # Modern C++ Project Template
 
-### CHECKOUT THE [BASIC BRANCH](https://github.com/GLaDOS-418/cpp-project-template/tree/basic) FOR A SIMPLE PROJECT.
-
 A basic project template for modern C++. Below are some better resources:
 
 - [cpp-best-practices/cpp_starter_project](https://github.com/cpp-best-practices/cpp_starter_project) - ARCHIVED
