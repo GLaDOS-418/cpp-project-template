@@ -3,11 +3,16 @@ export PROJECT_NAME=project-name
 .PHONY: build clean rebuild test testprint deps run
 
 build:
-	./project_build.sh
+	# export CC=gcc
+	# export CXX=g++
+	mkdir -p build
+	cd build && conan install .. --output-folder=. --build=missing --profile=default
+	cd build && cmake ..  -DCMAKE_BUILD_TYPE=Debug  -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} --preset conan-debug
+	cd build && cmake --build .
 clean:
 	/bin/rm -r build/
 rebuild: clean build
-	echo "rebuilding..."
+	echo "clean + build successfull!"
 test:
 	cd ./build && ctest -C Debug && cd ..
 testprint:

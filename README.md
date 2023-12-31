@@ -31,7 +31,7 @@ Use the latest version of everything.
 
 - create application and test executables
 - use conan 2.0
-- generate a default conan profile. update profile in the `project_build.sh` if not default.
+- generate a default conan profile. update profile in the `build` in `makefile` if not default.
 
 ```bash
 $ make clean     ## remove build dir
@@ -42,7 +42,7 @@ $ make testprint ## run only failed tests and ouput on stdout
 $ make deps      ## installs all conan dependencies
 ```
 
-- check `project_build.sh` for step by step build process
+- check `build` in `Makefile`  for step by step build process
 - to clear conan cache, run : `$ conan remove -f '*'`
 - here's a sample conan profile which can be gerenated using the command
 
