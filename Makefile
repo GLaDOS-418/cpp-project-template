@@ -1,12 +1,10 @@
 export PROJECT_NAME=project-name
+# export CC=gcc
+# export CXX=g++
 
-.PHONY: build clean rebuild test testprint deps run
+.PHONY: build clean rebuild test testprint package run
 
-build:
-	# export CC=gcc
-	# export CXX=g++
-	mkdir -p build
-	cd build && conan install .. --output-folder=. --build=missing --profile=default
+build: package
 	cd build && cmake ..  -DCMAKE_BUILD_TYPE=Debug  -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} --preset conan-debug
 	cd build && cmake --build .
 clean:
@@ -17,9 +15,8 @@ test:
 	cd ./build && ctest -C Debug && cd ..
 testprint:
 	cd ./build && ctest --rerun-failed --output-on-failure -C Debug && cd ..
-deps:
-	# export CC=gcc && \
-	# export CXX=g++ && \
+package:
+	mkdir -p build
 	conan install . --output-folder=./build --build=missing --profile default
 
 run: check_project_name check_project_exists

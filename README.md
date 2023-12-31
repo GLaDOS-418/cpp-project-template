@@ -39,7 +39,7 @@ $ make build     ## build project inside build dir
 $ make rebuild   ## equivalent to `clean + build`
 $ make test      ## run tests from test folder
 $ make testprint ## run only failed tests and ouput on stdout
-$ make deps      ## installs all conan dependencies
+$ make package   ## installs all package dependencies (using conan)
 ```
 
 - check `build` in `Makefile`  for step by step build process
