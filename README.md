@@ -10,7 +10,7 @@ A basic project template for modern C++. Below are some better resources:
 
 Use the latest version of everything.
 
-- [x] *Compiler*                                      : clang++, g++
+- [x] *Compiler*                                      : Clang++
 - [x] *Build*                                         : CMake
 - [x] *Package Management*                            : Conan 2.0
 - [x] *Unit Testing*                                  : Catch2
@@ -18,7 +18,7 @@ Use the latest version of everything.
 - [ ] *Code Formatter*
 - [ ] *Code Coverage*
 - [ ] consolidate the shipping folder
-- [ ] *Docker* support to build and ship applications
+- [x] *Docker* devcontainer
 - [ ] *CI* using github actions
 - [ ] *Doxygen Support*
 - [ ] *Mocking Framework*
@@ -35,16 +35,22 @@ Use the latest version of everything.
 
 ```bash
 $ make clean     ## remove build dir
+$ make deepclean ## remove build dir + remove conan cache
 $ make build     ## build project inside build dir
 $ make rebuild   ## equivalent to `clean + build`
 $ make test      ## run tests from test folder
 $ make testprint ## run only failed tests and ouput on stdout
 $ make package   ## installs all package dependencies (using conan)
+$ make image     ## build docker image using .devcontainer/Dockerfile for dev
+$ make terminal  ## start a terminal and load current project dir as a volume
 ```
 
 - check `build` in `Makefile`  for step by step build process
 - to clear conan cache, run : `$ conan remove -f '*'`
 - here's a sample conan profile which can be gerenated using the command
+- `conan.profile` is used as a custom conan profile.
+- docker image generated from `$ make image` is `cppdev:latest`.
+- docker container started from `$ make terminal` is `cppdev_container`.
 
 ``` bash
 $ conan profile detect ## creates a default conan profile
@@ -53,9 +59,9 @@ $ cat ~/.conan2/profiles/default
 arch=x86_64
 build_type=Debug
 compiler=clang
-compiler.cppstd=gnu20
+compiler.cppstd=gnu23
 compiler.libcxx=libstdc++11
-compiler.version=15
+compiler.version=18
 os=Linux
 ```
 
@@ -80,7 +86,7 @@ function new_cpp_project {
   cd ${1}
   /usr/bin/rm -rf .git
   echo "# ${1}" >| README.md
-  grep -rl --color=never 'project-name' | xargs sed -i "s/project-name/${1}/g"
+  grep -rl --color=never 'project_name' | xargs sed -i "s/project_name/${1}/g"
   git init
   git add -f .
   git commit -m "created project ${1}."

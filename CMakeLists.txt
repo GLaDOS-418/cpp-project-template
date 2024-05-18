@@ -7,7 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(DEFINED ENV{PROJECT_NAME})
     set(PROJECT_NAME $ENV{PROJECT_NAME})
 else()
-    set(PROJECT_NAME "project-name")
+    set(PROJECT_NAME "project_name")
 endif()
 
 set( PROJECT_VERSION 0.1 )

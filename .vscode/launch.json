@@ -5,7 +5,7 @@
       "name": "(gdb) Attach",
       "type": "cppdbg",
       "request": "attach",
-      "program": "${workspaceFolder}/build/project-name", // Modify the path to your built executable
+      "program": "${workspaceFolder}/build/project_name", // Modify the path to your built executable
       "MIMode": "gdb",
       "setupCommands": [
           {
@@ -24,7 +24,7 @@
       "name": "C++ LLDB",
       "type": "lldb",
       "request": "launch",
-      "program": "${workspaceFolder}/build/project-name", // Modify the path to your built executable
+      "program": "${workspaceFolder}/build/project_name", // Modify the path to your built executable
       "args": [], // Optional: Add command-line arguments here
       //"stopAtEntry": true,
       "cwd": "${workspaceFolder}",
