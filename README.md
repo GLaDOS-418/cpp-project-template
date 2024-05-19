@@ -6,27 +6,27 @@ A basic project template for modern C++. Below are some better resources:
 - [cpp-best-practices/cmake_template](https://github.com/cpp-best-practices/cmake_template)
 - [cpp-best-practices/cpp_starter_project](https://github.com/cpp-best-practices/cpp_starter_project) - ARCHIVED
 
-## Features : Requirements
+## Setup Progress
 
 Use the latest version of everything.
 
 ```markdown
-- [x] Compiler                                      : Clang++
-- [x] Build                                         : CMake
-- [x] Package Management                            : Conan 2.0
-- [x] Unit Testing                                  : Catch2
-- [x] Static Code Analysers                         : Clang-Tidy
-- [x] Code Formatter                                : Clang-Format
-- [ ] Code Coverage
-- [ ] consolidate the shipping folder
-- [x] Sharable Dev Environment                      : Docker
-- [ ] CI using github actions
-- [ ] Doxygen Support
-- [ ] Mocking Framework
-- [ ] Fuzz Testing
-- [ ] Ccache Integration
-- [ ] Header File Manager                           : include-what-you-use
-- [x] Language Server                               : clangd
+- [x] Compiler                        : clang++
+- [x] Build                           : cmake
+- [x] Package Management              : conan2.0
+- [x] Unit Testing                    : catch2
+- [x] Static Code Analysers           : clang-tidy
+- [x] Code Formatter                  : clang-format
+- [ ] Code Coverage                   : gcov
+- [ ] Consolidate Built Artifacts     : cpack
+- [x] Sharable Dev Environment        : docker
+- [ ] CI workflows                    : github workflows
+- [ ] Code documentation              : doxygen
+- [ ] Mocking Framework               : gmock
+- [ ] Fuzz Testing                    : libfuzzer
+- [ ] Ccache Integration              : ccache
+- [ ] Header File Manager             : include-what-you-use
+- [x] Language Server                 : clangd
 ```
 
 
@@ -50,6 +50,8 @@ $ make terminal  ## start a terminal and load current project dir as a volume
 ```
 
 - check `build` in `Makefile`  for step by step build process
+- the cmake built artifacts are in the `build` folder.
+- build logs are in the `logs` folder.
 - to clear conan cache, run : `$ conan remove -f '*'`
 - here's a sample conan profile which can be gerenated using the command
 - `conan.profile` is used as a custom conan profile.
@@ -122,5 +124,5 @@ function new_cpp_project {
 - [C++ Coding style &mdash; Firefox Source Docs documentation]( https://firefox-source-docs.mozilla.org/code-quality/coding-style/coding_style_cpp.html ) 
 - [Code Style Guidelines | WebKit]( https://webkit.org/code-style-guidelines/ ) 
 - [GNU Coding Standards]( https://www.gnu.org/prep/standards/standards.html ) 
-- [Epic C++ Coding Standard For Unreal Engine | Unreal Engine 5.4 Documentation | Epic Developer Community]( https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine ) 
+- [Epic C++ Coding Standard For Unreal Engine]( https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine ) 
 - [C++ Coding Standards and Style Guide - NASA Technical Reports Server (NTRS)]( https://ntrs.nasa.gov/citations/20080039927 ) 
