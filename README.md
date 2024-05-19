@@ -10,12 +10,13 @@ A basic project template for modern C++. Below are some better resources:
 
 Use the latest version of everything.
 
+```markdown
 - [x] *Compiler*                                      : Clang++
 - [x] *Build*                                         : CMake
 - [x] *Package Management*                            : Conan 2.0
 - [x] *Unit Testing*                                  : Catch2
 - [ ] *Static Code Analysers*
-- [ ] *Code Formatter*
+- [x] *Code Formatter*                                : Clang-Format
 - [ ] *Code Coverage*
 - [ ] consolidate the shipping folder
 - [x] *Docker* devcontainer
@@ -25,6 +26,7 @@ Use the latest version of everything.
 - [ ] *Fuzz Testing*
 - [ ] *Ccache* integration
 - [ ] *header file analysers*                         : include-what-you-use
+```
 
 
 ## Build Instructions
@@ -36,11 +38,12 @@ Use the latest version of everything.
 ```bash
 $ make clean     ## remove build dir
 $ make deepclean ## remove build dir + remove conan cache
-$ make build     ## build project inside build dir
+$ make format    ## format code using clag-format
+$ make package   ## installs all package dependencies (using conan)
+$ make build     ## build project inside build dir ( +package +format)
 $ make rebuild   ## equivalent to `clean + build`
 $ make test      ## run tests from test folder
 $ make testprint ## run only failed tests and ouput on stdout
-$ make package   ## installs all package dependencies (using conan)
 $ make image     ## build docker image using .devcontainer/Dockerfile for dev
 $ make terminal  ## start a terminal and load current project dir as a volume
 ```
@@ -94,3 +97,20 @@ function new_cpp_project {
   echo " ========================   PROJECT ${1} SETUP COMPLETE.  ======================== "
 }
 ```
+
+### Clang-Format
+
+- the config in the repo is generated using the tool itself: `$ clang-format -style=chromium -dump-config > .clang-format`.
+- supported styles: `google`, `llvm`, `gnu`, `mozilla`, `chromium`, `microsoft`, `webkit`.
+- change `.clang-format` file to customize.
+- some formatting guides:
+    -[Google C++ Style Guide]( https://google.github.io/styleguide/cppguide.html ) 
+    -[LLVM Coding Standards &#8212; LLVM 19.0.0git documentation]( https://chromium.googlesource.com/chromium/src/+/HEAD/styleguide/c++/c++.md ) 
+    -[Chromium C++ style guide]( https://chromium.googlesource.com/chromium/src/+/HEAD/styleguide/c++/c++.md ) 
+    -[C++ Coding style &mdash; Firefox Source Docs documentation]( https://firefox-source-docs.mozilla.org/code-quality/coding-style/coding_style_cpp.html ) 
+    -[Code Style Guidelines | WebKit]( https://webkit.org/code-style-guidelines/ ) 
+    -[GNU Coding Standards]( https://www.gnu.org/prep/standards/standards.html ) 
+    -[Epic C++ Coding Standard For Unreal Engine | Unreal Engine 5.4 Documentation | Epic Developer Community]( https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine ) 
+    -[C++ Coding Standards and Style Guide - NASA Technical Reports Server (NTRS)]( https://ntrs.nasa.gov/citations/20080039927 ) 
+
+

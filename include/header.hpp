@@ -3,6 +3,8 @@
 
 #include <string>
 
-inline std::string func() { return "setup successfully!\n"; }
+inline std::string func() {
+  return "setup successfully!\n";
+}
 
-#endif // INCLUDE_INCLUDE_HEADER_HPP_
+#endif  // INCLUDE_INCLUDE_HEADER_HPP_

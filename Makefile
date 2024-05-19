@@ -10,8 +10,10 @@ CONTAINER_NAME=${IMAGE_NAME}_container
 # Define the container home directory variable
 CONTAINER_HOME_DIR=/home/${PROJECT_NAME}
 
-.PHONY: build clean rebuild test testprint package run deepclean terminal image
+.PHONY: build clean rebuild test testprint package run deepclean terminal image format
 
+format:
+	git ls-files -cmo --exclude-standard | grep -iE '\.(c|cc|cpp|cxx|txx|h|hpp|tpp)$$' | xargs clang-format -i
 package:
 	mkdir -p build
 	conan install . \
@@ -19,7 +21,7 @@ package:
 		--build=missing \
 		--profile:build=./conan.profile \
 		--profile:host=./conan.profile
-build: package
+build: format package
 	cd build && \
 		cmake ..  -DCMAKE_BUILD_TYPE=Debug  \
 		-DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
@@ -60,6 +62,7 @@ terminal:
 		docker run --net=host -it \
 			--name ${CONTAINER_NAME} \
 			-v ${PWD}:${CONTAINER_HOME_DIR} \
+ 			-u $(id -u):$(id -g) \
 			-w ${CONTAINER_HOME_DIR} \
 			${IMAGE_NAME}:${IMAGE_TAG}; \
 	fi

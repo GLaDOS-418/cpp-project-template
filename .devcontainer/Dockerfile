@@ -27,4 +27,5 @@ ENV PATH=/root/.local/bin:$PATH \
 # Install conan
 RUN pipx install conan &&  conan --version
 
-CMD ["/bin/fish"]
+# Entry point script to set umask and start fish shell
+ENTRYPOINT ["sh", "-c", "umask 0022 && exec /bin/fish"]
