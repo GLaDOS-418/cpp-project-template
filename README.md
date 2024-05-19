@@ -2,30 +2,31 @@
 
 A basic project template for modern C++. Below are some better resources:
 
-- [cpp-best-practices/cpp_starter_project](https://github.com/cpp-best-practices/cpp_starter_project) - ARCHIVED
 - [filipdutescu/modern-cpp-template](https://github.com/filipdutescu/modern-cpp-template)
 - [cpp-best-practices/cmake_template](https://github.com/cpp-best-practices/cmake_template)
+- [cpp-best-practices/cpp_starter_project](https://github.com/cpp-best-practices/cpp_starter_project) - ARCHIVED
 
 ## Features : Requirements
 
 Use the latest version of everything.
 
 ```markdown
-- [x] *Compiler*                                      : Clang++
-- [x] *Build*                                         : CMake
-- [x] *Package Management*                            : Conan 2.0
-- [x] *Unit Testing*                                  : Catch2
-- [x] *Static Code Analysers*                         : Clang-Tidy
-- [x] *Code Formatter*                                : Clang-Format
-- [ ] *Code Coverage*
+- [x] Compiler                                      : Clang++
+- [x] Build                                         : CMake
+- [x] Package Management                            : Conan 2.0
+- [x] Unit Testing                                  : Catch2
+- [x] Static Code Analysers                         : Clang-Tidy
+- [x] Code Formatter                                : Clang-Format
+- [ ] Code Coverage
 - [ ] consolidate the shipping folder
-- [x] *Docker* devcontainer
-- [ ] *CI* using github actions
-- [ ] *Doxygen Support*
-- [ ] *Mocking Framework*
-- [ ] *Fuzz Testing*
-- [ ] *Ccache* integration
-- [ ] *header file analysers*                         : include-what-you-use
+- [x] Sharable Dev Environment                      : Docker
+- [ ] CI using github actions
+- [ ] Doxygen Support
+- [ ] Mocking Framework
+- [ ] Fuzz Testing
+- [ ] Ccache Integration
+- [ ] Header File Manager                           : include-what-you-use
+- [x] Language Server                               : clangd
 ```
 
 
@@ -99,18 +100,27 @@ function new_cpp_project {
 ```
 
 ### Clang-Format
-
-- the config in the repo is generated using the tool itself: `$ clang-format -style=chromium -dump-config > .clang-format`.
+- the config in the repo is generated using the tool itself:
+    - `$ clang-format -style=chromium -dump-config > .clang-format`.
 - supported styles: `google`, `llvm`, `gnu`, `mozilla`, `chromium`, `microsoft`, `webkit`.
 - change `.clang-format` file to customize.
-- some formatting guides:
-    -[Google C++ Style Guide]( https://google.github.io/styleguide/cppguide.html ) 
-    -[LLVM Coding Standards &#8212; LLVM 19.0.0git documentation]( https://chromium.googlesource.com/chromium/src/+/HEAD/styleguide/c++/c++.md ) 
-    -[Chromium C++ style guide]( https://chromium.googlesource.com/chromium/src/+/HEAD/styleguide/c++/c++.md ) 
-    -[C++ Coding style &mdash; Firefox Source Docs documentation]( https://firefox-source-docs.mozilla.org/code-quality/coding-style/coding_style_cpp.html ) 
-    -[Code Style Guidelines | WebKit]( https://webkit.org/code-style-guidelines/ ) 
-    -[GNU Coding Standards]( https://www.gnu.org/prep/standards/standards.html ) 
-    -[Epic C++ Coding Standard For Unreal Engine | Unreal Engine 5.4 Documentation | Epic Developer Community]( https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine ) 
-    -[C++ Coding Standards and Style Guide - NASA Technical Reports Server (NTRS)]( https://ntrs.nasa.gov/citations/20080039927 ) 
 
 
+### Clang-Tidy
+- TODO: `cppcheck` can be an addendum.
+
+### Clangd
+- modify `.clangd` file
+- `.clang-tidy` options are merged with `.clangd` when IDE suggests.
+
+
+##  Guidelines
+- [C++ Core Guidelines]( https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines ) 
+- [Google C++ Style Guide]( https://google.github.io/styleguide/cppguide.html ) 
+- [LLVM Coding Standards &#8212; LLVM 19.0.0git documentation]( https://chromium.googlesource.com/chromium/src/+/HEAD/styleguide/c++/c++.md ) 
+- [Chromium C++ style guide]( https://chromium.googlesource.com/chromium/src/+/HEAD/styleguide/c++/c++.md ) 
+- [C++ Coding style &mdash; Firefox Source Docs documentation]( https://firefox-source-docs.mozilla.org/code-quality/coding-style/coding_style_cpp.html ) 
+- [Code Style Guidelines | WebKit]( https://webkit.org/code-style-guidelines/ ) 
+- [GNU Coding Standards]( https://www.gnu.org/prep/standards/standards.html ) 
+- [Epic C++ Coding Standard For Unreal Engine | Unreal Engine 5.4 Documentation | Epic Developer Community]( https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine ) 
+- [C++ Coding Standards and Style Guide - NASA Technical Reports Server (NTRS)]( https://ntrs.nasa.gov/citations/20080039927 ) 
