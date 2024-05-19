@@ -22,11 +22,13 @@ package:
 		--profile:build=./conan.profile \
 		--profile:host=./conan.profile
 build: format package
+	@NOW=$$(date +"%Y%m%d_%H%M%S"); \
+	LOG_FILE="buildlog_$${NOW}.txt"; \
 	cd build && \
-		cmake ..  -DCMAKE_BUILD_TYPE=Debug  \
-		-DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
-		--preset conan-debug
-	cd build && cmake --build .
+	cmake .. -DCMAKE_BUILD_TYPE=Debug \
+	-DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
+	--preset conan-debug 2>&1 | tee $${LOG_FILE}; \
+	cmake --build . 2>&1 | tee -a $${LOG_FILE}
 clean:
 	/bin/rm -rf build/
 deepclean: clean

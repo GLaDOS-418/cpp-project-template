@@ -15,7 +15,7 @@ Use the latest version of everything.
 - [x] *Build*                                         : CMake
 - [x] *Package Management*                            : Conan 2.0
 - [x] *Unit Testing*                                  : Catch2
-- [ ] *Static Code Analysers*
+- [x] *Static Code Analysers*                         : Clang-Tidy
 - [x] *Code Formatter*                                : Clang-Format
 - [ ] *Code Coverage*
 - [ ] consolidate the shipping folder

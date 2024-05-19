@@ -2,7 +2,7 @@
 
 #include "header.hpp"
 
-int main() {
-  std::cout << func() << std::endl;
+auto main() -> int {
+  std::cout << func();
   return 0;
 }
