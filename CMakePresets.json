@@ -1,0 +1,44 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "configure-debug-linux",
+            "displayName": "Configure for Linux",
+            "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}",
+                "CMAKE_C_COMPILER": "/usr/bin/gcc",
+                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": true
+            }
+        }
+    ],
+    "buildPresets": [
+    {
+      "name": "build-debug-linux",
+      "configurePreset": "configure-debug-linux"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "workflow-debug-linux",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "configure-debug-linux"
+        },
+        {
+          "type": "build",
+          "name": "build-debug-linux"
+        }
+      ]
+    }
+  ]
+}
