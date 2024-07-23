@@ -3,11 +3,13 @@ cmake_minimum_required(VERSION 3.23)
 ### ALL THE SETTINGS APPLICABLE TO THE WHOLE PROJECT RESIDES HERE
 
 # the project name
-if(DEFINED ENV{PROJECT_NAME})
-    set(PROJECT_NAME $ENV{PROJECT_NAME})
-else()
-    set(PROJECT_NAME "project_name")
-endif()
+set(PROJECT_NAME "project_name")
+
+project(${PROJECT_NAME}
+  DESCRIPTION ""
+  VERSION 0.0.1
+  LANGUAGES CXX
+)
 
 if( NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug")

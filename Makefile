@@ -7,7 +7,11 @@ IMAGE_NAME=cppdev
 IMAGE_TAG=latest
 CONTAINER_NAME=${IMAGE_NAME}_container
 
+# cmake build directory
 BUILD_DIR=build
+
+# cmake build type
+BUILD_TYPE=Debug
 
 # Define the container home directory variable
 CONTAINER_HOME_DIR=/home/${PROJECT_NAME}
@@ -17,33 +21,32 @@ CONTAINER_HOME_DIR=/home/${PROJECT_NAME}
 format:
 	git ls-files -cmo --exclude-standard | grep -iE '\.(c|cc|cpp|cxx|txx|h|hpp|tpp)$$' | xargs clang-format -i
 package:
-	mkdir -p build
+	mkdir -p ${BUILD_DIR}
 	conan install . \
-		--output-folder=./build \
+		--output-folder=${BUILD_DIR} \
 		--build=missing \
-		--profile:build=./conan.profile \
-		--profile:host=./conan.profile
-build: format package
+		--profile:build=conan.profile \
+		--profile:host=conan.profile
+build: package
 	mkdir -p logs
 	@NOW=$$(date +"%Y%m%d_%H%M%S"); \
-	LOG_FILE="buildlog_$${NOW}.txt"; 
-
-	cmake -S . -B ${BUILD_DIR} -DCMAKE_BUILD_TYPE=Debug \
+	LOG_FILE="buildlog_$${NOW}.txt"; \
+	cmake -S . -B ${BUILD_DIR} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
 	-DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
-	--preset conan-debug 2>&1 | tee ../logs/$${LOG_FILE}; 
+	-DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake 2>&1 | tee logs/$${LOG_FILE}; \
+	cmake --build ${BUILD_DIR} 2>&1 | tee -a logs/$${LOG_FILE}
 
-	cmake --build ${BUILD_DIR} 2>&1 | tee -a ../logs/$${LOG_FILE}
 clean:
-	/bin/rm -rf build/
+	/bin/rm -rf ${BUILD_DIR}
 deepclean: clean
 	conan remove -c "*"
 rebuild: clean build
 	echo "clean + build successfull!"
 test:
-	cd ./build && ctest -C Debug && cd ..
+	cd ${BUILD_DIR} && ctest -C ${BUILD_TYPE} && cd ..
 testprint:
-	cd ./build && \
-		ctest --rerun-failed --output-on-failure -C Debug && cd ..
+	cd ${BUILD_DIR} && \
+		ctest --rerun-failed --output-on-failure -C ${BUILD_TYPE} && cd ..
 run: check_project_name check_project_exists
 	./build/${PROJECT_NAME}
 
