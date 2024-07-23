@@ -2,6 +2,6 @@
 
 namespace maths {
 
-  int mul(int a, int b) noexcept { return a * b; }
+int mul(int a, int b) noexcept { return a * b; }
 
-} // namespace maths
+}// namespace maths

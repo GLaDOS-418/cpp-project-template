@@ -3,9 +3,9 @@
 
 namespace maths {
 
-  int sub(int from, int num) noexcept;
+int sub(int from, int num) noexcept;
 
 }
 
 
-#endif  // INCLUDE_INCLUDE_SUBTRACTER_H_
+#endif// INCLUDE_INCLUDE_SUBTRACTER_H_
