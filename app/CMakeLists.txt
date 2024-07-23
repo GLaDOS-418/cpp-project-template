@@ -1,11 +1,7 @@
-## create a executable name 
-if(DEFINED ENV{PROJECT_NAME})
-    set(PROJECT_NAME $ENV{PROJECT_NAME})
-else()
-  set(PROJECT_NAME "project_name")
-endif()
+project(app CXX)
 
-set(APP_TARGET_NAME ${PROJECT_NAME})
+## create a executable name 
+set(APP_TARGET_NAME ${PROJECT_NAME}_exe)
 
 ## list all the source files
 set(SOURCES 

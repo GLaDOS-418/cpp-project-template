@@ -3,8 +3,8 @@
 
 namespace maths {
 
-int mul(int a, int b) noexcept;
+  int mul(int a, int b) noexcept; 
 
 };
 
-#endif// INCLUDE_MULTIPLIER_H_
+#endif  // INCLUDE_MULTIPLIER_H_
