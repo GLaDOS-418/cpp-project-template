@@ -2,8 +2,7 @@
 
 
 build:
-	conan install . --output-folder=build --build=missing
-	cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake
+	cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 	cmake --build build
 
 clean:

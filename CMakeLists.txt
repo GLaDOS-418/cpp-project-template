@@ -3,11 +3,11 @@ cmake_minimum_required(VERSION 3.23)
 ### ALL THE SETTINGS APPLICABLE TO THE WHOLE PROJECT RESIDES HERE
 
 # the project name
-if(DEFINED ENV{PROJECT_NAME})
-    set(PROJECT_NAME $ENV{PROJECT_NAME})
-else()
-    set(PROJECT_NAME "project_name")
-endif()
+project("project_name"
+  DESCRIPTION ""
+  VERSION 0.0.0.1
+  LANGUAGES C CXX
+)
 
 if( NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug")
@@ -32,6 +32,8 @@ include(./cmake/build_options.cmake)
 include(./cmake/compiler_options.cmake)
 include(./cmake/sanitizers.cmake)
 include(./cmake/project_settings.cmake)
+include(./cmake/cpm.cmake)
+include(./cmake/cpm_dependencies.cmake)
 
 # add the libs first
 add_subdirectory(libs)
