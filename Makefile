@@ -7,6 +7,8 @@ IMAGE_NAME=cppdev
 IMAGE_TAG=latest
 CONTAINER_NAME=${IMAGE_NAME}_container
 
+BUILD_DIR=build
+
 # Define the container home directory variable
 CONTAINER_HOME_DIR=/home/${PROJECT_NAME}
 
@@ -24,12 +26,13 @@ package:
 build: format package
 	mkdir -p logs
 	@NOW=$$(date +"%Y%m%d_%H%M%S"); \
-	LOG_FILE="buildlog_$${NOW}.txt"; \
-	cd build && \
-	cmake .. -DCMAKE_BUILD_TYPE=Debug \
+	LOG_FILE="buildlog_$${NOW}.txt"; 
+
+	cmake -S . -B ${BUILD_DIR} -DCMAKE_BUILD_TYPE=Debug \
 	-DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} \
-	--preset conan-debug 2>&1 | tee ../logs/$${LOG_FILE}; \
-	cmake --build . 2>&1 | tee -a ../logs/$${LOG_FILE}
+	--preset conan-debug 2>&1 | tee ../logs/$${LOG_FILE}; 
+
+	cmake --build ${BUILD_DIR} 2>&1 | tee -a ../logs/$${LOG_FILE}
 clean:
 	/bin/rm -rf build/
 deepclean: clean

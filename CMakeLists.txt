@@ -1,101 +1,44 @@
-set( CMAKE_VERSION 3.25)
+cmake_minimum_required(VERSION 3.23)
 
-cmake_minimum_required(VERSION ${CMAKE_VERSION})
+### ALL THE SETTINGS APPLICABLE TO THE WHOLE PROJECT RESIDES HERE
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
+# the project name
 if(DEFINED ENV{PROJECT_NAME})
     set(PROJECT_NAME $ENV{PROJECT_NAME})
 else()
     set(PROJECT_NAME "project_name")
 endif()
 
-set( PROJECT_VERSION 0.1 )
-
-project(
-  ${PROJECT_NAME}  
-  VERSION ${PROJECT_VERSION}
-  LANGUAGES CXX
-  )
-
-set(CMAKE_CXX_STANDARD 23)
-
-
 if( NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-
 message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
 
 
-## conan basic setup
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-  message( STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan...")
-  file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake" "${CMAKE_BINARY_DIR}/conan.cmake")
-  message(STATUS "Cmake-Conan downloaded succesfully.")
+# Only set the cxx_standard if it is not set by someone else
+if (NOT DEFINED CMAKE_CXX_STANDARD)
+  # set c++ standard
+  set(CMAKE_CXX_STANDARD 20)
 endif()
 
-include(${CMAKE_BINARY_DIR}/conan.cmake)
+# make sure c++ standard doesn't decay if it's not available
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# clang-tidy setup
-find_program(CLANGTIDY clang-tidy)
-if(CLANGTIDY)
-  set(CMAKE_CXX_CLANG_TIDY ${CLANGTIDY})
-else()
-  message(SEND_ERROR "clang-tidy requested but executable not found.")
-endif()
+# set the executable 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-# interface means a header only library
-add_library( ${PROJECT_NAME}-lib INTERFACE )
+include(./cmake/build_options.cmake)
+include(./cmake/compiler_options.cmake)
+include(./cmake/sanitizers.cmake)
+include(./cmake/project_settings.cmake)
 
-# ADD INCLUDE FOLDERS
-target_include_directories( ${PROJECT_NAME}-lib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include )
+# add the libs first
+add_subdirectory(libs)
 
-# COLLECT ALL SOURCE FILES
-file(GLOB_RECURSE ALL_SOURCE_FILES
-    ${CMAKE_SOURCE_DIR}/src/*.cpp
-)
+# then add the dependant apps
+add_subdirectory(app)
 
-# ADD EXECUTABLE
-add_executable( ${PROJECT_NAME} ${ALL_SOURCE_FILES} )
 
-target_link_libraries( ${PROJECT_NAME} PRIVATE ${PROJECT_NAME}-lib )
-
-set(GCC_WARNINGS
-  -Wall
-  -Wextra 
-  -Wshadow
-  -Wnon-virtual-dtor
-  -Wold-style-cast
-  -Wcast-align
-  -Wunused
-  -Woverloaded-virtual
-  -Wpedantic
-  -Wconversion
-  -Wsign-conversion
-  -Wnull-dereference
-  -Wdouble-promotion
-  -Wformat=2
-
-  #-fsanitize=undefined,thread
-  -fsanitize=undefined,address
-
-  #compile with gdb debug info
-  #-ggdb3
-  -g3
-  )
-
-add_compile_options( ${GCC_WARNINGS} )
-
-link_libraries("-fsanitize=address")
-#link_libraries("-fsanitize=thread")
-
-# catch2 set up
-# option(BUILD_TESTS "Enables building the Catch2 unit tests" ON)
-
-#if(BUILD_TESTS)
-   enable_testing()
-   add_subdirectory(test)
- #endif()
-
+# Enable testing
+include(CTest)
